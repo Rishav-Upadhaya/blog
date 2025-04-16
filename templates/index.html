@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      src="https://kit.fontawesome.com/029e5145ff.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Existing head content remains the same -->
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: #fff7f5;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header {
+        background: white;
+        padding: 2rem 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header h2 {
+        color: #e95c29;
+        font-size: 2.5rem;
+        font-weight: 600;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+      }
+
+      .card h2 {
+        color: #e95c29;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+      }
+
+      h5 {
+        color: #4a6fa8;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .add-btn {
+        background: #e95c29;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .add-btn:hover {
+        background: #d45325;
+        box-shadow: 0 4px 15px rgba(233, 92, 41, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .edit {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }
+
+      .edit i {
+        color: #888;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+
+      .edit i:hover {
+        color: #e95c29;
+        background: #ffeae3;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        .header h2 {
+          font-size: 2rem;
+        }
+
+        .card {
+          padding: 1.5rem;
+        }
+
+        .add-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+      /* Add these new styles for the confirmation modal */
+      .confirmation-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-actions {
+        margin-top: 1.5rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      .confirm-btn {
+        background: #e95c29;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .confirm-btn:hover {
+        background: #d45325;
+        transform: translateY(-1px);
+      }
+
+      .cancel-btn {
+        background: #f0f0f0;
+        color: #666;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .cancel-btn:hover {
+        background: #e0e0e0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <h2>Rishav Blog</h2>
+        <a href="/add" class="add-btn">
+          <i class="fa-solid fa-plus"></i>
+          New Post
+        </a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="blog-list">
+        {% for post in posts reversed %}
+        <div class="card">
+          <div class="edit">
+            <a href="{% url 'edit' post.id %}"
+              ><i class="fa-regular fa-pen-to-square"></i
+            ></a>
+            <a href="{% url 'delete' post.id %}"
+              ><i class="fa-solid fa-trash"></i
+            ></a>
+          </div>
+          <a href="{% url 'post' post.id %}" style="text-decoration: none">
+            <h2>{{post.title}}</h2>
+            <h5>{{post.created_at}}</h5>
+            <p>{{post.body|truncatewords:20}}</p>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Add confirmation modal -->
+    <div id="confirmationModal" class="confirmation-modal">
+      <div class="modal-content">
+        <h3>Are you sure you want to delete this post?</h3>
+        <p>This action cannot be undone.</p>
+        <div class="modal-actions">
+          <button id="confirmDelete" class="confirm-btn">Delete</button>
+          <button id="cancelDelete" class="cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add confirmation dialog functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        let deleteLinks = document.querySelectorAll(".fa-trash");
+        let confirmationModal = document.getElementById("confirmationModal");
+        let confirmDeleteBtn = document.getElementById("confirmDelete");
+        let cancelDeleteBtn = document.getElementById("cancelDelete");
+        let deleteUrl = null;
+
+        deleteLinks.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            deleteUrl = this.parentElement.href;
+            confirmationModal.style.display = "flex";
+          });
+        });
+
+        confirmDeleteBtn.addEventListener("click", function () {
+          window.location.href = deleteUrl;
+        });
+
+        cancelDeleteBtn.addEventListener("click", function () {
+          confirmationModal.style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener("click", function (e) {
+          if (e.target === confirmationModal) {
+            confirmationModal.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

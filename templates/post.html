@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      src="https://kit.fontawesome.com/029e5145ff.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #fff7f5;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header {
+        background: white;
+        padding: 2rem 0;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .header-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .blog-title {
+        color: #e95c29;
+        font-size: 2.2rem;
+        font-weight: 600;
+      }
+
+      .back-btn {
+        background: #e95c29;
+        color: white;
+        padding: 0.7rem 1.4rem;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        transition: all 0.2s ease;
+      }
+
+      .back-btn:hover {
+        background: #d45325;
+        box-shadow: 0 4px 15px rgba(233, 92, 41, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .post-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .post-title {
+        color: #2c2c2c;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+
+      .post-meta {
+        color: #666;
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .post-meta i {
+        color: #e95c29;
+      }
+
+      .post-content {
+        color: #444;
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+
+      .post-content p {
+        margin-bottom: 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 15px;
+        }
+
+        .post-card {
+          padding: 1.5rem;
+        }
+
+        .post-title {
+          font-size: 1.7rem;
+        }
+
+        .blog-title {
+          font-size: 1.8rem;
+        }
+
+        .back-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <h1 class="blog-title">Rishav's Blog</h1>
+        <a href="/" class="back-btn">
+          <i class="fa-solid fa-arrow-left"></i>
+          All Posts
+        </a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="post-card">
+        <h1 class="post-title">{{posts.title}}</h1>
+
+        <div class="post-meta">
+          <i class="fa-regular fa-calendar"></i>
+          <span>{{posts.created_at}}</span>
+        </div>
+
+        <div class="post-content">
+          <p>{{posts.body}}</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

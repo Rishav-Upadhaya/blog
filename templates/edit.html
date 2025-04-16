@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post</title>
+    <script
+      src="https://kit.fontawesome.com/029e5145ff.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #fff7f5;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      h2 {
+        color: #e95c29;
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+      }
+
+      .edit-form {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .form-group {
+        margin-bottom: 1.8rem;
+      }
+
+      .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.9rem;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #e95c29;
+        box-shadow: 0 0 0 3px rgba(233, 92, 41, 0.1);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 200px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .submit-btn {
+        background: #e95c29;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .cancel-btn {
+        background: white;
+        color: #666;
+        padding: 1rem 2rem;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .submit-btn:hover {
+        background: #d45325;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(233, 92, 41, 0.3);
+      }
+
+      .cancel-btn:hover {
+        border-color: #e95c29;
+        color: #e95c29;
+        transform: translateY(-1px);
+      }
+
+      /* Style Django form elements */
+      .edit-form p {
+        margin-bottom: 1.8rem;
+      }
+
+      .edit-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1.5rem;
+        }
+
+        .edit-form {
+          padding: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+        }
+
+        .btn-group {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2><i class="fa-regular fa-pen-to-square"></i> Edit Post</h2>
+      </div>
+
+      <div class="edit-form">
+        <form method="post">
+          {% csrf_token %} {{ form.as_p }}
+          <div class="btn-group">
+            <button type="submit" class="submit-btn">
+              <i class="fa-solid fa-floppy-disk"></i>
+              Save Changes
+            </button>
+            <a href="{% url 'post' post.pk %}" class="cancel-btn">
+              <i class="fa-solid fa-arrow-left"></i>
+              Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

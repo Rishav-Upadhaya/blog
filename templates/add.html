@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      src="https://kit.fontawesome.com/029e5145ff.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #fff7f5;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      h1 {
+        color: #e95c29;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+
+      .nav-btn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        background: #e95c29;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+      }
+
+      .nav-btn:hover {
+        background: #d45325;
+        box-shadow: 0 4px 15px rgba(233, 92, 41, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .form-container {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .form-group {
+        margin-bottom: 1.8rem;
+      }
+
+      .form-group label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+        font-size: 1.1rem;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.9rem;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #e95c29;
+        box-shadow: 0 0 0 3px rgba(233, 92, 41, 0.1);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 200px;
+        resize: vertical;
+        line-height: 1.6;
+      }
+
+      .submit-btn {
+        background: #e95c29;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .submit-btn:hover {
+        background: #d45325;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(233, 92, 41, 0.3);
+      }
+
+      .success-message {
+        text-align: center;
+        background: #e3f7e6;
+        padding: 2rem;
+        border-radius: 12px;
+        color: #2e7d32;
+        margin: 2rem auto;
+        max-width: 600px;
+      }
+
+      .success-message h1 {
+        color: #2e7d32;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1.5rem;
+        }
+
+        .form-container {
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .nav-btn {
+          position: static;
+          margin-bottom: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="/" class="nav-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back to Blogs
+      </a>
+
+      <div class="header">
+        <h1>Create New Post</h1>
+      </div>
+
+      {% if submitted %}
+      <div class="success-message">
+        <h1><i class="fa-solid fa-circle-check"></i> Post Submitted!</h1>
+        <p>Your blog post has been successfully published.</p>
+      </div>
+      {% else %}
+      <div class="form-container">
+        <form action="add" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="title">Post Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              placeholder="Enter your post title"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="body">Post Content</label>
+            <textarea
+              id="body"
+              name="body"
+              placeholder="Write your post content here..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-paper-plane"></i>
+            Publish Post
+          </button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" />
+      <input type="password" name="password1" placeholder="Password" />
+      <input type="Submit" value="login" />
+    </form>
+    {% comment %} <a href="{% url 'bloghome' %}">Blogpage</a> {% endcomment %}
+    <a href="{% url 'register' %}">Register Yourself</a>
+    <a href="{% url 'homepage' %}">Homepage</a>
+  </body>
+</html>
