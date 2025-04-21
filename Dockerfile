@@ -1,8 +1,5 @@
-# Use Python 3.13 slim image as base
-FROM python:3.13-slim
-
-# Copy project files into container
-COPY . /app
+# Use Python 3.11 slim image as base
+FROM python:3.11-slim
 
 # Set working directory for subsequent commands
 WORKDIR /app
@@ -10,12 +7,12 @@ WORKDIR /app
 # Update pip to latest version
 RUN pip install --upgrade pip 
 
-# Install project dependencies
+# Copy requirements first to leverage Docker cache
+COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
-# Create database tables
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+# Copy project files into container
+COPY . /app/
 
 # Specify port the application will listen on
 EXPOSE 8000

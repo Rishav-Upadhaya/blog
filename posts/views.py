@@ -15,11 +15,7 @@ class BlogPostListView(ListView):
     context_object_name = 'posts'
 
     def get_queryset(self):
-        posts = cache.get('all_posts')
-        if not posts:
-            posts = Post.objects.all()
-            cache.set('all_posts', posts, timeout=60*15)  # Cache for 15 minutes
-        return posts
+        return Post.objects.all()
 
 
 class BlogPostDetailView(DetailView):
@@ -34,6 +30,7 @@ class AddPostView(LoginRequiredMixin, CreateView):
     template_name = 'add.html'
     
     def get_success_url(self):
+        cache.delete('all_posts')  # Invalidate cache when adding new post
         return reverse_lazy('add') + '?submitted=True'
     
     def get_context_data(self, **kwargs):
@@ -67,6 +64,7 @@ class AddPostView(LoginRequiredMixin, CreateView):
 def deletePost(request, pk):
     delpost = Post.objects.get(id = pk)
     delpost.delete()
+    cache.delete('all_posts')  # Invalidate cache when deleting post
     posts = Post.objects.all()
     return render(request, "index.html", {'posts' : posts})
 
@@ -76,6 +74,7 @@ def editPost(request, pk):
         form = add_post(request.POST, instance = posts)
         if form.is_valid():
             form.save()
+            cache.delete('all_posts')  # Invalidate cache when editing post
             return redirect('post', pk = posts.pk)
     else:
         form = add_post(instance=posts)
